@@ -32,10 +32,14 @@ def text_to_chunks(text, words_per_chunk = 100):
     return chunks
 
 
+def translate_text(text):
+    return GoogleTranslator(source='auto', target='en').translate(text)
+
+
 def translate_chunks(chunks):
     translated_chunks = []
     for chunk in chunks:
-        translated_chunk = GoogleTranslator(source='auto', target='en').translate(chunk)
+        translated_chunk = translate_text(chunk)
         translated_chunks.append(translated_chunk)
     return translated_chunks
 

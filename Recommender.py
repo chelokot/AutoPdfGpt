@@ -4,7 +4,7 @@
 import os
 import tensorflow_hub as hub
 import numpy as np
-from utils import pdf_to_chunks
+from utils import pdf_to_chunks, translate_text
 from RecursiveSummarizer import RecursiveSummarizer
 from OpenAIManager import OpenAIManager
 
@@ -94,6 +94,7 @@ class Recommender:
 
 
     def generate_answer(self, question):
+        question = translate_text(question)
         topn_chunks = self.search(question)
         prompt = ""
         prompt += 'search results:\n\n'
@@ -105,11 +106,10 @@ class Recommender:
         prompt += "Instructions: Compose a comprehensive reply to the query using the search results given. "\
                   "Cite each reference using [Page Number] notation (every result has number). "\
                   "Citation should be done at the end of each sentence. If the search results mention multiple subjects "\
-                  "with the same name, create separate answers for each. Only include information found in the results and "\
-                  "don't add additional information. Make sure the answer is correct and don't output false. "\
-                  "If the text does not relate to the query, state 'Text Not Found in PDF'. Ignore "\
-                  "results which has nothing to do with the question. Only answer what is asked. The "\
-                  "answer should be short and concise. Answer step-by-step. \n\nQuery: {question}\nAnswer: "
+                  "with the same name, create separate answers for each.  Make sure the answer is correct and don't output false. "\
+                  "Ignore results which has nothing to do with the question. Only answer what is asked. "\
+                  "Provide additional explanations or examples if asked by user. "\
+                  "The answer should be short and concise. Answer step-by-step. \n\nQuery: {question}\nAnswer: "
         
         print(prompt)
 
