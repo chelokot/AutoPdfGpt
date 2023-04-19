@@ -5,7 +5,7 @@ from sklearn.neighbors import NearestNeighbors
 from Recommender import Recommender
 from config import openai_api_key
 
-recommender = Recommender()
+recommender = Recommender(openai_api_key)
 
 title = 'PDF GPT'
 description = """ What is PDF GPT ?
