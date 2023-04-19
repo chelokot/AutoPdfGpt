@@ -31,3 +31,4 @@ with gr.Blocks() as demo:
         btn.click(recommender.question_answer, inputs=[file, question], outputs=[answer])
 
 
+demo.launch(degub=True)
